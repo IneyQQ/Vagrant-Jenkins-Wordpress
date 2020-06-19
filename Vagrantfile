@@ -21,9 +21,9 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision "file", source: "jenkins", destination: "~/jenkins"
     config.vm.provision "shell" do |shell|
-      shell.env: {
-        "jenkins_admin_username" => jenkins_admin_username,
-        "jenkins_admin_password" => jenkins_admin_password
+      shell.env = {
+        "JENKINS_ADMIN_USERNAME" => jenkins_admin_username,
+        "JENKINS_ADMIN_PASSWORD" => jenkins_admin_password
       }
       shell.inline = <<-jenkins
         cd /home/vagrant/jenkins
