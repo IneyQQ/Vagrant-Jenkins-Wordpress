@@ -106,7 +106,7 @@ echo "Download Jenkins Plugins"
 for plugin in ${plugins[@]}; do
   if [ ! -f $plugin.hpi ] && [ ! -f $plugin.jpi ]; then
     echo Download $plugin
-    wget -q https://mirrors.tuna.tsinghua.edu.cn/jenkins/plugins/$plugin/latest/$plugin.hpi
+    wget -q http://mirror.serverion.com/jenkins/plugins/$plugin/latest/$plugin.hpi
     chown jenkins:jenkins $plugin.hpi
     require_jenkins_restart=true
   fi
