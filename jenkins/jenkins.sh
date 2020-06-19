@@ -44,10 +44,8 @@ if [ $require_jenkins_restart = true ]; then
 fi
 
 if [ $jenkins_first_install = true ]; then
-  sleep 1m
+  wget http://localhost:8080/jnlpJars/jenkins-cli.jar -t 30 --waitretry=2 --retry-connrefused --retry-on-http-error=503
+  rm -f jenkins-cli.jar
   rm -f /var/lib/jenkins/init.groovy.d/basic-security.groovy
-  
-  JENKINSPWD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
-  echo initialAdminPassword: $JENKINSPWD
 fi
 
