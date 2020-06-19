@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# default_value
+require_jenkins_restart=false
+
 echo "Adding apt-keys"
 wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
 echo deb http://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list
@@ -23,6 +27,7 @@ else
   jenkins_installed_before=false
   echo "Installing jenkins"
   sudo apt-get -y install jenkins > /dev/null 2>&1
+  require_jenkins_restart=true
 fi
 
 cd /var/lib/jenkins/plugins
@@ -101,7 +106,6 @@ plugins=(
 	workflow-support
 	ws-cleanup
 )
-require_jenkins_restart=false
 echo "Download Jenkins Plugins"
 for plugin in ${plugins[@]}; do
   if [ ! -f $plugin.hpi ]; then
@@ -111,8 +115,6 @@ for plugin in ${plugins[@]}; do
     require_jenkins_restart=true
   fi
 done
-
-sudo service jenkins start
 
 if [ $require_jenkins_restart = true ]; then
   sudo service jenkins restart
