@@ -2,6 +2,8 @@
 # vi: set ft=ruby :
 #
 
+jenkins_admin_username = ENV['jenkins_admin_username'] || 'admin'
+jenkins_admin_password = ENV['jenkins_admin_password'] || 'Passw0rd'
 
 Vagrant.configure("2") do |config|
   config.vm.define "jenkins" do |config|
@@ -17,8 +19,16 @@ Vagrant.configure("2") do |config|
       vb.memory = "4096"
     end
 
+    config.vm.provision "file", source: "jenkins", destination: "~/jenkins"
     config.vm.provision "shell" do |shell|
-      shell.path = "jenkins.sh"
+      shell.env: {
+        "jenkins_admin_username" => jenkins_admin_username,
+        "jenkins_admin_password" => jenkins_admin_password
+      }
+      shell.inline = <<-jenkins
+        cd /home/vagrant/jenkins
+        bash jenkins.sh
+      jenkins
     end
   end
 end
