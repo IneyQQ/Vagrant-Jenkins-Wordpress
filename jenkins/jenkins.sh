@@ -17,8 +17,6 @@ fi
 # Install Jenkins plugins if not installed
 # Mark Jenkins restart if plugins not installed
 cd /var/lib/jenkins/plugins
-mv /home/vagrant/jenkins/plugins.list .
-chown jenkins:jenkins plugins.list
 echo "--- INSTALL JENKINS PLUGINS START ---"
 while read plugin; do
   if [ ! -f $plugin.hpi ]; then
@@ -27,7 +25,7 @@ while read plugin; do
     chown jenkins:jenkins $plugin.hpi
     require_jenkins_restart=true
   fi
-done < plugins.list
+done < /home/vagrant/jenkins/plugins.list
 echo "--- INSTALL JENKINS PLUGINS END ---"
 
 # Set Admin user login and password on first install

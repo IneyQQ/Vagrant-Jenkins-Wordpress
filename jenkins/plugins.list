@@ -12,6 +12,7 @@ credentials
 display-url-api
 durable-task
 email-ext
+generic-webhook-trigger
 git-client
 github-api
 github-branch-source
