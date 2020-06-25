@@ -53,6 +53,7 @@ okhttp-api
 resource-disposer
 scm-api
 script-security
+ssh-agent
 ssh-credentials
 ssh-slaves
 structs
